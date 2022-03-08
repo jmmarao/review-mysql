@@ -1,0 +1,54 @@
+//===================== LINGUAGEM DE SELEÇÃO DE DADOS (DQL - Data Query Language) =====================
+
+//===================== JOINS =====================
+//Função de juntar tabelas para realizar consultas de dados, isto é, intersecção entre duas tabelas (lista atributos somente que possuem valor)
+SELECT atributo1, tabela1.atributoTab1, tabela2.atributoTab2
+FROM tabela1 JOIN tabela2
+ON tabela1.FK = tabela2.PK;
+
+//Também pode ser chamado de INNER JOIN, INNER é opcional
+//A função é sempre feita unindo a FK de uma tabela com a PK de outra tabela para a qual a FK tuilizada faz referência (aponta)
+
+//Abreviando os atributos no JOIN
+SELECT tab1.atributoTab1, tab2.atributoTab2
+FROM tabela1 tab1 JOIN tabela2 tab2
+ON tab1.PK = tab2.FK;
+
+//===================== OUTER JOIN =====================
+//O OUTER JOIN inclui nos resultados, além das tuplas que o INNER JOIN retornaria, as tuplas de uma tabela que não possuem correspondência na outra tabela, isto é, lista os atributos com valores NULL
+//Tipos de OUTER JOIN: LEFT, RIGHT e FULL (não possui implementação no MySQL) - ao utilizar os tipos de OUTER JOIN, o termo OUTER  torna-se opcional
+
+//===================== LEFT JOIN =====================
+//Considera valores todo o conjunto de atributos (NULL ou não) da tabela da esquerda
+SELECT tab1.atributoTab1, tab2.atributoTab2
+FROM tabela1 tab1 LEFT JOIN tabela2 tab2
+ON tab1.PK = tab2.FK;
+
+//Unindo três tabelas, a leitura ocorre da esquerda para direita, então primeiro é retornado a junção das duas tabelas iniciais, e este resultado será associado ao segundo JOIN referente à terceira tabela
+SELECT tab1.atributoTab1, tab2.atributoTab2
+FROM tabela1 tab1 LEFT JOIN tabela2 tab2 ON tab1.PK = tab2.FK
+LEFT JOIN tabela3 tab 3 ON tab2.PK = tab3.FK;
+
+//===================== RIGHT JOIN =====================
+//Considera valores todo o conjunto de atributos (NULL ou não) da tabela da direita
+SELECT tab1.atributoTab1, tab2.atributoTab2
+FROM tabela1 tab1 RIGHT JOIN tabela2 tab2
+ON tab1.PK = tab2.FK;
+
+//===================== FULL JOIN =====================
+//Este comando é utilizado quando for necessário unir os resultados de todos os JOINS: INNER JOIN, LEFT JOIN e RIGHT JOIN
+//O MySQL não implementa o FULL JOIN, no entanto existe uma maneira de forçar sua apliacação por meio do comando UNION
+
+SELECT tab1.atributoTab1, tab2.atributoTab2
+FROM tabela1 tab1 LEFT JOIN tabela2 tab2 ON tab1.PK = tab2.FK
+UNION
+SELECT tab1.atributoTab1, tab2.atributoTab2
+FROM tabela1 tab1 RIGHT JOIN tabela2 tab2 ON tab1.PK = tab2.FK;
+
+//===================== SUBCONSULTAS =====================
+//Quando uma subconsulta retorna apenas um valor, é possível utilizar os operadores relacionais: =, >, <, >=, <=, <> (ou !=)
+//Neste caso espera-se que a subconsulta retorne apenas um valor.
+
+//Quando a subconsulta retorna mais do que um valor é necessário utilizar os operadores lógicos: IN, NOT IN, ALL, ANY (ou SOME)
+//Estes são os operadores específicos para comparação com múltiplos resultados.
+

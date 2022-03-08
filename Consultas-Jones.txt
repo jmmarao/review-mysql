@@ -1,0 +1,86 @@
+//===================== LINGUAGEM DE SELEÇÃO DE DADOS (DQL - Data Query Language) =====================
+
+//Query Padrão
+SELECT ...
+FROM ...
+WHERE ...
+(GROUP BY) ...
+(HAVING) ...
+(ORDER BY) atributo DESC; //função opcional para ordenar do maior para o menor (ASC é o padrão)
+
+//===================== CONSULTA DE DADOS =====================
+//Renomear atributos na consulta
+SELECT atributo1, atributo2 AS atributoRenomeado FROM nomeTabela;
+
+//===================== CLÁUSULA SELECT =====================
+
+//Seleção de atributos em específico
+SELECT atributo1, atributo2, ... FROM nomeTabela;
+
+//Seleção de todos os atributos
+SELECT * FROM nomeTabela;
+
+//Seleção de valores sem repetição
+SELECT DISTINCT atributo FROM nomeTabela;
+
+//===================== CLÁUSULA FROM =====================
+
+//A cláusula FROM permite referenciar tabelas por apelidos, de modo a utilizá-los em toda a querry para facilitar a manipulação
+SELECT tab1.atributo, tab2.atributo, tab3.atributo
+FROM nomeTabela1 tab1, nomeTabela2 tab2, nomeTabela3 tab3
+WHERE tab1.atributo = tab2.atributo AND tab2.atributo = tab3.atributo;
+
+//===================== CLÁUSULA WHERE =====================
+//É possível colocar WHERE no comando (geralmente é utilizado a PK), isso filtrará por linha. Já o SELECT filtra por coluna
+//A cláusula WHERE aceita operadores lógiocos (IN, AND, OR e NOT) e operadores de comparação (<, <=, >, >=, = e <>)
+
+//=========== STRINGS ===========
+
+//Comparações de strings não são case sensitives, isto é, não há diferença entre maiúsculas e minúsculas.
+'Mar%' : qualquer string que começa com "Mar" (Marcela, Marcos, Maria, ...);
+'%ela': qualquer string terminada por "ela" (Isabela, sela, novela, ...);
+'s__': qualquer string com exatamente três caracteres começada pela letra "s" (sol, sal, seu, ...);
+'%a_': qualquer string cuja penúltima letra seja "a" (mar, paladar, nadar, ...)
+
+Para utilizar os operadores de strings exposto acima é necessário utilizar LIKE
+SELECT atributo1
+FROM nomeTabela
+WHERE atributo1 LIKE 'C%' OR atributo1 LIKE '_a%';
+
+//=========== VALORES NULOS ===========
+
+//É possível consultar valores NULOS ou NÃO NULO por meio dos respectivos comandos: IS NULL e IS NOT NULL. 
+
+//=========== RECUPERAÇÃO DE DADOS ===========
+
+//Conversão de minúsculo para maiúsculo
+SELECT atributo1, UPPER(atributo2), atributo 3 FROM nomeTabela WHERE LOWER(atributo2) = 'antonio nunes';
+
+//Retornar parte de uma string
+SELECT SUBSTR(atributo, 1, 10) FROM nomeTabela;
+
+//Retornar o tamanho de uma string
+SELECT atributo, LENGTH(atributo2) FROM nomeTabela;
+
+//Função para arredondar e truncar valores para n casas decimais
+SELECT ROUND(atributo, nº casas decimais) TRUNCATE (atributo, nº casas decimais) FROM nomeTabela;
+
+//Retorna o resto da divisão
+SELECT MOD (atributo1, 100) AS "Resto de atributo1 dividido por 100" FROM nomeTabela;
+
+//Concatena colunas e strings
+SELECT CONCAT(logradouro, ',', nro) AS Endereco FROM nomeTabela;
+
+//TRIM: remove espaços em branco do início e fim de uma string;
+//REPLACE: substitui as ocorrências de um ou mais caracteres por outro
+
+//Substituição de valores nulos. No exemplo abaixo, o primeiro atributo com valor NULL retornará o valor 0
+SELECT atributo, COALESCE (atributo1, atributo2, 0) FROM nomeTabela;
+
+//Estrutura condicional em SQL
+SELECT atributo1, sexo,
+		CASE sexo WHEN 'M' THEN 'Masculino'
+						WHEN 'F' THEN 'Feminino'
+						ELSE 'Não Informado'
+		END AS sexo_descricao
+FROM nomeTabela;

@@ -1,0 +1,67 @@
+//===================== LINGUAGEM DE DEFINIÇÃO DE DADOS (DDL - Data Definition Language) =====================
+
+//===================== BANCO DE DADOS =====================
+
+//Criando BD no MySQL
+CREATE DATABASE nomeBD;
+
+//Conectando a um BD existente
+USE nomeBD;
+
+//Deletando um BD existente
+DROP DATABASE nomeBD;
+
+//===================== DEFINIÇÃO DE TABELAS =====================
+
+//Criando tabelas
+CREATE TABLE nomeTabela (atributo1 domínio1,
+											atributo2 domínio2, ..., 
+												atributoN domínioN,
+													CONSTRAINT <regra de integridade 1>,
+														CONSTRAINT <regra de integridade 2>, ...,
+															CONSTRAINT <regra de integridade N>);
+
+//++++++++++++++++++++++++++++ REGRA DE INTEGRIDADE: definição de PK, FK e/ou checks.
+//CONSTRAINT atributoPK PRIMARY KEY (atributo),
+//CONSTRAINT atributoFK FOREIGN KEY (atributo) REFERENCES tabelaReferenciada(atributoChave),
+//CONSTRAINT atributoCheck CHECK (sexo in ('M', 'F', 'm', 'f')),
+//+++++++++ Para declarar as regrasde integridade é necessário utilizar o termo CONSTRAINTS antes
+//+++++++++++++++ Para cada DOMÍNIO é possível especificar: NOT NULL, UNIQUE e/ou DEFAULT.
+
+//===================== DESCRIÇÃO DE TABELAS =====================
+DESC nomeTabela; //Tabela descritiva com os atributos
+SHOW CREATE TABLE nomeTabela; //Descrição de criação da tabela a partir dos atributos
+
+//===================== MODIFICAÇÃO DE TABELAS =====================
+
+//Adicionar atributos na tabela
+ALTER TABLE nomeTabela ADD atributo domínio;
+
+//Remover atributos na tabela
+ALTER TABLE nomeTabela DROP atributo;
+
+//Alterar o domínio de atributos
+ALTER TABLE nomeTabela MODIFY atributo domínioNovo;
+
+//Alterar nome de atributos
+ALTER TABLE nomeTabela CHANGE atributoAtual atributoNovo domínioAtual;
+
+//===================== LINGUAGEM DE MANIPULAÇÃO DE DADOS (DML - Data Manipulation Language) =====================
+
+//===================== INSERÇÃO DE DADOS =====================
+INSERT INTO nomeTabela VALUES (informar valores na ordem de registro dos atributos -
+														separado com vírgula);
+INSERT INTO nomeTabela (nomeAtributo1, nomeAtributo2, ...) VALUES (valorAtributo1, valorAtributo2, ...);
+
+//===================== ALTERAÇÃO DE DADOS =====================
+UPDATE nomeTabela SET nomeAtributo = "novoValorAtributo" WHERE nomePK=valorPK;
+
+//Funciona com estruturas condicionais (OR/AND)
+UPDATE nomeTabela SET nomeAtributo = "novoValorAtributo" 
+WHERE nomePK1=valorPK1 OR nomePK2=valorPK2;
+
+//===================== REMOÇÃO DE DADOS =====================
+DELETE FROM nomeTabela where nomePK=valorPK;
+ 
+//Funciona com estruturas condicionais (OR/AND)
+DELETE FROM nomeTabela where nomePK1=valorPK1 OR nomePK2=valorPK2;
